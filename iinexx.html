@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>UVA Restaurant & Café</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+background:#111;
+color:#fff;
+overflow-x:hidden;
+}
+
+:root{
+--bg:#111111;
+--card:#1b1b1b;
+--brown:#4B3425;
+--wood:#2B1D16;
+--beige:#D8C3A5;
+--cream:#F5EFE6;
+--gold:#C8A96B;
+}
+
+section{
+padding:100px 8%;
+}
+
+h1,h2,h3{
+font-family:'Playfair Display',serif;
+}
+
+img{
+width:100%;
+display:block;
+}
+
+a{
+text-decoration:none;
+color:white;
+}
+
+.btn{
+padding:14px 30px;
+border:none;
+border-radius:50px;
+cursor:pointer;
+font-weight:600;
+transition:.4s;
+}
+
+.primary-btn{
+background:var(--gold);
+color:#111;
+}
+
+.primary-btn:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 30px rgba(200,169,107,.3);
+}
+
+.secondary-btn{
+background:transparent;
+border:1px solid rgba(255,255,255,.3);
+color:#fff;
+backdrop-filter:blur(10px);
+}
+
+.secondary-btn:hover{
+background:white;
+color:black;
+}
+
+.section-title{
+font-size:48px;
+margin-bottom:20px;
+text-align:center;
+}
+
+.section-sub{
+text-align:center;
+color:#ccc;
+max-width:700px;
+margin:auto;
+margin-bottom:60px;
+line-height:1.8;
+}
+
+/* NAVBAR */
+
+nav{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+padding:20px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:1000;
+transition:.4s;
+}
+
+nav.scrolled{
+background:rgba(0,0,0,.85);
+backdrop-filter:blur(10px);
+box-shadow:0 5px 20px rgba(0,0,0,.4);
+}
+
+.logo{
+font-size:32px;
+font-weight:700;
+font-family:'Playfair Display',serif;
+color:var(--gold);
+}
+
+nav ul{
+display:flex;
+gap:30px;
+list-style:none;
+}
+
+nav ul li a{
+font-size:15px;
+transition:.3s;
+}
+
+nav ul li a:hover{
+color:var(--gold);
+}
+
+/* HERO */
+
+.hero{
+height:100vh;
+background:
+linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.7)),
+url('https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1920&auto=format&fit=crop');
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 20px;
+}
+
+.hero-content{
+max-width:900px;
+animation:fadeUp 1.2s ease;
+}
+
+.hero h1{
+font-size:70px;
+line-height:1.2;
+margin-bottom:25px;
+}
+
+.hero p{
+font-size:18px;
+color:#ddd;
+line-height:1.8;
+margin-bottom:40px;
+}
+
+.hero-buttons{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+}
+
+/* ABOUT */
+
+.about{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:60px;
+align-items:center;
+}
+
+.about-img img{
+border-radius:25px;
+height:600px;
+object-fit:cover;
+box-shadow:0 20px 50px rgba(0,0,0,.4);
+}
+
+.about-content h2{
+font-size:50px;
+margin-bottom:25px;
+}
+
+.about-content p{
+color:#ccc;
+line-height:1.9;
+margin-bottom:40px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+}
+
+.stat{
+background:rgba(255,255,255,.05);
+padding:25px;
+border-radius:20px;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,.05);
+text-align:center;
+}
+
+.stat h3{
+font-size:32px;
+color:var(--gold);
+}
+
+/* MENU */
+
+.menu-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+}
+
+.card{
+background:var(--card);
+border-radius:25px;
+overflow:hidden;
+transition:.4s;
+position:relative;
+}
+
+.card:hover{
+transform:translateY(-10px);
+}
+
+.card img{
+height:260px;
+object-fit:cover;
+transition:.5s;
+}
+
+.card:hover img{
+transform:scale(1.08);
+}
+
+.card-content{
+padding:25px;
+}
+
+.card-content h3{
+font-size:28px;
+margin-bottom:10px;
+}
+
+.card-content p{
+color:#bbb;
+line-height:1.7;
+margin-bottom:20px;
+}
+
+.price{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.price span{
+font-size:24px;
+color:var(--gold);
+font-weight:700;
+}
+
+/* SLIDER */
+
+.slider{
+overflow:hidden;
+position:relative;
+margin-top:50px;
+}
+
+.slide-track{
+display:flex;
+width:calc(350px * 10);
+animation:scroll 25s linear infinite;
+gap:30px;
+}
+
+.slide{
+width:350px;
+background:#1b1b1b;
+border-radius:25px;
+overflow:hidden;
+flex-shrink:0;
+}
+
+.slide img{
+height:250px;
+object-fit:cover;
+}
+
+.slide h3{
+padding:20px;
+font-size:28px;
+}
+
+/* GALLERY */
+
+.gallery-grid{
+columns:3 250px;
+gap:20px;
+}
+
+.gallery-grid img{
+margin-bottom:20px;
+border-radius:20px;
+transition:.4s;
+cursor:pointer;
+}
+
+.gallery-grid img:hover{
+transform:scale(1.03);
+}
+
+/* OFFERS */
+
+.offer-box{
+background:
+linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop');
+background-size:cover;
+background-position:center;
+padding:80px;
+border-radius:30px;
+text-align:center;
+}
+
+.offer-box h2{
+font-size:55px;
+margin-bottom:20px;
+}
+
+.timer{
+font-size:40px;
+color:var(--gold);
+margin-top:20px;
+font-weight:700;
+}
+
+/* RESERVATION */
+
+.reservation-form{
+max-width:900px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:25px;
+}
+
+.reservation-form input,
+.reservation-form select{
+padding:18px;
+border:none;
+background:#1d1d1d;
+color:white;
+border-radius:15px;
+outline:none;
+}
+
+.reservation-form button{
+grid-column:1/-1;
+}
+
+/* CONTACT */
+
+.contact-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:50px;
+}
+
+.contact-info{
+display:flex;
+flex-direction:column;
+gap:25px;
+}
+
+.contact-item{
+background:#1a1a1a;
+padding:25px;
+border-radius:20px;
+}
+
+iframe{
+width:100%;
+height:450px;
+border:none;
+border-radius:20px;
+}
+
+/* FOOTER */
+
+footer{
+background:#0a0a0a;
+padding:70px 8% 30px;
+}
+
+.footer-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:40px;
+margin-bottom:40px;
+}
+
+.footer-grid h3{
+margin-bottom:20px;
+}
+
+.footer-grid p,
+.footer-grid a{
+color:#aaa;
+line-height:2;
+}
+
+.newsletter{
+display:flex;
+margin-top:20px;
+}
+
+.newsletter input{
+flex:1;
+padding:15px;
+border:none;
+outline:none;
+border-radius:10px 0 0 10px;
+}
+
+.newsletter button{
+border:none;
+background:var(--gold);
+padding:15px 25px;
+border-radius:0 10px 10px 0;
+font-weight:bold;
+cursor:pointer;
+}
+
+.copyright{
+text-align:center;
+padding-top:30px;
+border-top:1px solid rgba(255,255,255,.08);
+color:#666;
+}
+
+/* WHATSAPP */
+
+.whatsapp{
+position:fixed;
+bottom:25px;
+right:25px;
+width:70px;
+height:70px;
+border-radius:50%;
+background:#25D366;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:32px;
+z-index:999;
+box-shadow:0 10px 30px rgba(0,0,0,.4);
+animation:bounce 2s infinite;
+}
+
+/* LIGHTBOX */
+
+.lightbox{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.9);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:2000;
+}
+
+.lightbox img{
+max-width:90%;
+max-height:90%;
+border-radius:20px;
+}
+
+/* ANIMATIONS */
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(50px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+@keyframes scroll{
+0%{
+transform:translateX(0);
+}
+100%{
+transform:translateX(calc(-350px * 5));
+}
+}
+
+@keyframes bounce{
+0%,100%{
+transform:translateY(0);
+}
+50%{
+transform:translateY(-10px);
+}
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.hero h1{
+font-size:45px;
+}
+
+.about{
+grid-template-columns:1fr;
+}
+
+.contact-grid{
+grid-template-columns:1fr;
+}
+
+.reservation-form{
+grid-template-columns:1fr;
+}
+
+nav ul{
+display:none;
+}
+
+.section-title{
+font-size:38px;
+}
+
+.offer-box h2{
+font-size:40px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav id="navbar">
+<div class="logo">UVA</div>
+
+<ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#menu">Menu</a></li>
+<li><a href="#gallery">Gallery</a></li>
+<li><a href="#offers">Offers</a></li>
+<li><a href="#reservation">Reservation</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+<div class="hero-content">
+
+<h1>Flavors Of The World,<br>Under One Roof</h1>
+
+<p>
+Experience handcrafted coffee, gourmet cuisine,
+and unforgettable ambiance in the heart of UVA Restaurant & Café.
+</p>
+
+<div class="hero-buttons">
+
+<button class="btn primary-btn">
+View Menu
+</button>
+
+<button class="btn secondary-btn">
+Book a Table
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+<div class="about">
+
+<div class="about-img">
+<img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1200&auto=format&fit=crop">
+</div>
+
+<div class="about-content">
+
+<h2>Where Luxury Meets Comfort</h2>
+
+<p>
+At UVA Restaurant & Café,
+every detail is designed to create warmth,
+comfort, and unforgettable experiences.
+From artisan coffee to premium dishes,
+we craft moments — not just meals.
+</p>
+
+<div class="stats">
+
+<div class="stat">
+<h3>12+</h3>
+<p>Years Experience</p>
+</div>
+
+<div class="stat">
+<h3>25K</h3>
+<p>Happy Customers</p>
+</div>
+
+<div class="stat">
+<h3>120+</h3>
+<p>Premium Dishes</p>
+</div>
+
+<div class="stat">
+<h3>500K</h3>
+<p>Coffee Served</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- MENU -->
+
+<section id="menu">
+
+<h2 class="section-title">Our Premium Menu</h2>
+
+<p class="section-sub">
+Luxury flavors crafted with passion and elegance.
+</p>
+
+<div class="menu-grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop">
+<div class="card-content">
+<h3>Spanish Latte</h3>
+<p>Rich espresso blended with creamy milk and caramel notes.</p>
+<div class="price">
+<span>$6.90</span>
+<button class="btn primary-btn">Order</button>
+</div>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop">
+<div class="card-content">
+<h3>Luxury Breakfast</h3>
+<p>Fresh bakery, eggs, avocado and artisan coffee.</p>
+<div class="price">
+<span>$14.90</span>
+<button class="btn primary-btn">Order</button>
+</div>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=1200&auto=format&fit=crop">
+<div class="card-content">
+<h3>Chocolate Dessert</h3>
+<p>Warm premium chocolate cake with soft cream.</p>
+<div class="price">
+<span>$8.50</span>
+<button class="btn primary-btn">Order</button>
+</div>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- SLIDER -->
+
+<section>
+
+<h2 class="section-title">Featured Products</h2>
+
+<div class="slider">
+
+<div class="slide-track">
+
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop">
+<h3>Signature Coffee</h3>
+</div>
+
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop">
+<h3>Luxury Dining</h3>
+</div>
+
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1200&auto=format&fit=crop">
+<h3>Premium Atmosphere</h3>
+</div>
+
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop">
+<h3>Chef Specials</h3>
+</div>
+
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=1200&auto=format&fit=crop">
+<h3>Sweet Desserts</h3>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- GALLERY -->
+
+<section id="gallery">
+
+<h2 class="section-title">Gallery</h2>
+
+<div class="gallery-grid">
+
+<img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1200&auto=format&fit=crop">
+<img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop">
+<img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop">
+<img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop">
+<img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=1200&auto=format&fit=crop">
+<img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1200&auto=format&fit=crop">
+
+</div>
+
+</section>
+
+<!-- OFFERS -->
+
+<section id="offers">
+
+<div class="offer-box">
+
+<h2>Special Weekend Offer</h2>
+
+<p>Get 30% OFF on all premium dishes and signature drinks.</p>
+
+<div class="timer" id="timer">
+02 : 11 : 24 : 55
+</div>
+
+</div>
+
+</section>
+
+<!-- RESERVATION -->
+
+<section id="reservation">
+
+<h2 class="section-title">Reserve Your Table</h2>
+
+<form class="reservation-form">
+
+<input type="text" placeholder="Full Name">
+
+<input type="tel" placeholder="Phone Number">
+
+<select>
+<option>Guests</option>
+<option>1 Person</option>
+<option>2 Persons</option>
+<option>4 Persons</option>
+<option>6 Persons</option>
+</select>
+
+<input type="date">
+
+<input type="time">
+
+<button class="btn primary-btn">
+Reserve Now
+</button>
+
+</form>
+
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+<h2 class="section-title">Contact Us</h2>
+
+<div class="contact-grid">
+
+<div class="contact-info">
+
+<div class="contact-item">
+<h3>Phone</h3>
+<p>+20 123 456 7890</p>
+</div>
+
+<div class="contact-item">
+<h3>WhatsApp</h3>
+<p>+20XXXXXXXXXX</p>
+</div>
+
+<div class="contact-item">
+<h3>Instagram</h3>
+<p>@uvacafe</p>
+</div>
+
+<div class="contact-item">
+<h3>Opening Hours</h3>
+<p>Daily: 8AM — 1AM</p>
+</div>
+
+</div>
+
+<div>
+<iframe src="https://maps.google.com/maps?q=cairo&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+</div>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="footer-grid">
+
+<div>
+<h3>UVA Café</h3>
+<p>
+Luxury coffee experience with warm atmosphere
+and premium dining moments.
+</p>
+</div>
+
+<div>
+<h3>Quick Links</h3>
+<p><a href="#">Home</a></p>
+<p><a href="#">Menu</a></p>
+<p><a href="#">Gallery</a></p>
+<p><a href="#">Contact</a></p>
+</div>
+
+<div>
+<h3>Newsletter</h3>
+
+<div class="newsletter">
+
+<input type="email" placeholder="Your Email">
+
+<button>Join</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="copyright">
+© 2026 UVA Restaurant & Café — All Rights Reserved.
+</div>
+
+</footer>
+
+<!-- WHATSAPP -->
+
+<a
+class="whatsapp"
+href="https://wa.me/20XXXXXXXXXX?text=Hello%20UVA%20Café,%20I’d%20like%20to%20ask%20about%20your%20menu."
+target="_blank"
+>
+💬
+</a>
+
+<!-- LIGHTBOX -->
+
+<div class="lightbox" id="lightbox">
+<img id="lightbox-img">
+</div>
+
+<script>
+
+/* NAVBAR SCROLL */
+
+window.addEventListener("scroll",()=>{
+
+document.getElementById("navbar")
+.classList.toggle("scrolled",window.scrollY>50)
+
+})
+
+/* LIGHTBOX */
+
+const galleryImages=document.querySelectorAll(".gallery-grid img")
+const lightbox=document.getElementById("lightbox")
+const lightboxImg=document.getElementById("lightbox-img")
+
+galleryImages.forEach(img=>{
+
+img.addEventListener("click",()=>{
+
+lightbox.style.display="flex"
+lightboxImg.src=img.src
+
+})
+
+})
+
+lightbox.addEventListener("click",()=>{
+
+lightbox.style.display="none"
+
+})
+
+/* COUNTDOWN */
+
+const timer=document.getElementById("timer")
+
+let countdown=new Date().getTime()+200000000
+
+setInterval(()=>{
+
+let now=new Date().getTime()
+
+let distance=countdown-now
+
+let days=Math.floor(distance/(1000*60*60*24))
+let hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60))
+let minutes=Math.floor((distance%(1000*60*60))/(1000*60))
+let seconds=Math.floor((distance%(1000*60))/1000)
+
+timer.innerHTML=
+days+"d : "+
+hours+"h : "+
+minutes+"m : "+
+seconds+"s"
+
+},1000)
+
+</script>
+
+</body>
+</html>
